@@ -17,13 +17,13 @@ class CreateMessagesTable extends Migration
             $table->increments('id');
             $table->string('msisdn');
             $table->text('body');
-            $table->string('smsc');
-            $table->boolean('corruption_related')->nullable();
+            $table->unsignedInteger('corruption_related_id')->nullable();
             $table->unsignedInteger('chat_id')->nullable();
-            $table->unsignedInteger('unread_count')->default(0);
+            $table->unsignedInteger('replies_count')->default(0);
             $table->timestamps();
 
             $table->foreign('chat_id')->references('id')->on('chats')->onDelete('SET NULL');
+            
 
         });
     }

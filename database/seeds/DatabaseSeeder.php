@@ -11,8 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $msg = factory(App\Message::class, 20)->create();
-        $usr = factory(App\User::class, 4)->create();
-
+         factory(App\User::class, 4)->create();
+         factory(App\Message::class, 20)->create()->each(function($m) {
+            $m->replies()->saveMany(factory(App\Reply::class, rand(0,2))->make()
+              );
+         });
+       
     }
 }

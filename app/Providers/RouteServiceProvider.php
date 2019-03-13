@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Message;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+       Route::bind('message', function ($id, $route) {
+             $msisdn = $route->parameter('msisdn');
+
+                return Message::where([
+                            'id'  => $id,
+                            //'msisdn' => $msisdn,
+                             ])->first() ?? abort(404);
+            });
 
         parent::boot();
     }

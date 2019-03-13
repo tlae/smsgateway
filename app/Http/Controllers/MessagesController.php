@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Message;
+use App\Msisdn;
 use Illuminate\Http\Request;
+use App\Http\Requests\MessageRequest;
 
 class MessagesController extends Controller
 {
+    
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,8 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        $messages = Message::latest()->paginate(6);
+        $messages = Message::with('phone')->join('msisdn', 'messages.id', '=', 'msisdn.last_message_id')
+                                          ->select('messages.*', 'msisdn.last_message_id')->latest()->paginate(6);
         return view('messages.index', compact('messages'));
     }
 
@@ -25,7 +30,9 @@ class MessagesController extends Controller
      */
     public function create()
     {
-        //
+        $message = new Message();
+        return view('messages.create', compact($message));
+
     }
 
     /**
@@ -34,9 +41,16 @@ class MessagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MessageRequest $request)
     {
-        //
+        //$request->messages()->create($request->only('msisdn', 'body'));
+
+        Message::create([
+        'body' => $request->body,
+        'msisdn' => $request->msisdn
+    ]);
+
+        return redirect()->route('messages.index')->with('Success', "Message received");
     }
 
     /**
@@ -45,9 +59,22 @@ class MessagesController extends Controller
      * @param  \App\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message)
+    public function show($message, $msisdn)
     {
-        //
+      
+      $messages = Message::with('replies.user')->where('msisdn', '=', $msisdn)->get();
+
+      $newmsisdn = Msisdn::find($msisdn);
+
+      if($newmsisdn->messages_unread_count > 0) {
+
+        $newmsisdn->messages_unread_count = 0;
+        $newmsisdn->save();
+      }
+      
+        //return view('messages.show', compact('messages', 'msisdn'));
+      return view('replies.showtest', compact('messages', 'msisdn'));
+
     }
 
     /**
