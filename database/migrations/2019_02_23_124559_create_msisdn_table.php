@@ -21,6 +21,7 @@ class CreateMsisdnTable extends Migration
             $table->unsignedInteger('messages_unread_count')->default(0);
             $table->unsignedInteger('chats_count')->default(0);
             $table->unsignedInteger('corruption_related_count')->default(0);
+            $table->unsignedInteger('open_chat_id')->nullable();
             $table->timestamps();
         });
     }

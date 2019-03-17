@@ -1,39 +1,57 @@
 @extends('layouts.app')
 @section('content')
 <div class="container content">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+          <div class="card">
+           <div class="card-body">
+            <div class="card-title">
+                <div class="d-flex align-items-center">
+                    <h3>{{ $chat->title }}</h3>
+                    <div class="ml-auto">
+                    <a href="{{route('chats.index')}}"  class="btn btn-outline-secondary"> Go to all Chats</a>
+                    </div>
+                    <div class="ml-auto">
+                    <a href="{{route('messages.index')}}"  class="btn btn-outline-secondary"> Go to all messages</a>
+                    </div>
+                </div>   
+            </div>
+            <hr>
+            <div class="media"> 
+              <div class="d-flex flex-column action-control mr-4">
+                  <a href="" title="Edit title and executive summary" class="edit">
+                      <i class="far fa-edit fa-2x mb-2"></i>
+                  </a>
+                  <a href="" title="forward chat" class="forward">
+                      <i class="far fa-share-square fa-2x mb-2"></i>
+                  </a>
+                  <a href="" title="Close chat" class="Close">
+                      <i class="far fa-trash-alt fa-2x mb-2"></i>
+                  </a>
+              </div>  
+               <div class="media-body">
+                {!! $chat->summary_html !!}
+                <div class="float-right mt-0">
+                  <span class="text-muted"> Created by {{$chat->user->name  }}</span>
+                  <div class="media">
+                      <span class="text-muted"> On {{ $chat->created_at }}</span>
+                  </div>
+                </div>      
+               </div>
+            </div>
+           </div>
+             
+          </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm">
           <div class="card">
             <div class="card-header"> 
+              <h3>Chat Conversations</h3>
               @php
-              $user = App\Msisdn::find($msisdn);
-              $open_chat_id = $user->open_chat_id;
-              if(is_null($open_chat_id)) {
-                $has_open_chat = false;
-              } 
-              else {
-                $has_open_chat = true;
-                $chat = App\Chat::find($open_chat_id);
-              }
+              $messages = App\Message::with('replies.user')->where('chat_id', '=', $chat->id)->get();
               @endphp
-              <div class="d-flex align-items-center">
-                   <h2>{{ "Messages for" . " " . $msisdn }}</h2> 
-                   @if ($has_open_chat)
-                   <div class="ml-5">
-                     <h2><a tabindex="0" role="button" id ="chatpopover" data-container="body"  data-html="true" type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="popover" data-placement="bottom">Unclosed conversation</a></h2>
-                   </div>
-                   <div id="popover-content-chatpopover" class="d-none">
-                       <div class="title">
-                        <h5>{{$chat->title}}</h5> 
-                        <a  type="button" class="btn btn-outline-primary btn-lg" href="/chats/{{$chat->slug}}" >Go to chat</a>
-                       </div>  
-                    </div>
-                    @endif
-                   <div class="ml-auto">
-                      <a href="{{route('messages.index')}}"  class="btn btn-outline-secondary"> Back to all Messages</a>
-                   </div>
-              </div>
-              
             </div>
             @include('layouts._messages')
             <div class="card-body height3">
@@ -64,12 +82,7 @@
                                      <i class="fas fa-bars fa-2x"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-content">
-                                  {{-- <a href="{{ route('messages.chat.create', $msg->id)  }}">Open Chat</a> --}}
-                                  @if ($has_open_chat)
-                                  <a href="/chats/{{$chat->slug}}">Go to chat</a>
-                                  @else
-                                  <a class= "chatmodal" data-toggle="modal" href="#chatModal{{ $msg->id }}"  id="{{ $msg->id }}" data-id="chatModal{{ $msg->id }}"> Open new chat</a> 
-                                  @endif                       
+                                                        
                                   <a href="#">Tagging</a>                                  
                                   <a href="#">Abuse & Misuse</a>
                                 </div>
@@ -130,31 +143,5 @@
     </div>
     @include('replies._create')
 </div>
-    @include('chats._chatcreate')
-
-    <script>
-
-
-    $(document).ready(function(){
-      $(".chatmodal").click(function(){
-        var thisid = $(this).attr("data-id");
-         var myid = $(this).attr("id");
-        $(".modal").attr("id",thisid);
-        $("#chatForm").attr("action","{{ url('/messages') }}" + "/" + myid+ "/chat");
-        $(thisid).modal('show');  
-      });    
-      });
-
-     $("[data-toggle=popover]").each(function(i, obj) {
-
-      $(this).popover({
-        html: true,
-        content: function() {
-          var id = $(this).attr('id')
-          return $('#popover-content-' + id).html();
-        }
-      });
-
-      });
-    </script>
 @endsection
+

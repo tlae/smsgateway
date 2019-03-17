@@ -22,7 +22,7 @@ class RepliesController extends Controller
     public function store(Message $message, Request $request)
     {
         
-        //dd('fuckkkkkkkkkkkk');
+       
         $message->replies()->create( $request->validate(['body' => 'required' ]) + ['user_id' => \Auth::id()]);
  
         return back()->with('success', "Reply sent successfully");
