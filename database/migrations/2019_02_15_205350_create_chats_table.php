@@ -18,7 +18,6 @@ class CreateChatsTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->unsignedInteger('message_id');
-            $table->unsignedInteger('reply_id');
             $table->unsignedInteger('user_id');
             $table->timestamp('closed_on')->nullable();
             $table->text('summary');

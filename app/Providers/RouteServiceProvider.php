@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Message;
+use App\Chat;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,9 @@ class RouteServiceProvider extends ServiceProvider
                             //'msisdn' => $msisdn,
                              ])->first() ?? abort(404);
             });
+       Route::bind('slug', function($slug) {
+        return Chat::where('slug', $slug)->first() ?? abort(404);
+    });
 
         parent::boot();
     }

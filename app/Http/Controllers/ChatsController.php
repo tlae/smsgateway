@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Message;
 use App\Chat;
+use App\Msisdn;
 use App\Http\Requests\ChatRequest;
 
 class ChatsController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,9 @@ class ChatsController extends Controller
      */
     public function index()
     {
-        //
+         $chats = Chat::with('user')->latest()->paginate(5);
+
+        return view('chats.index', compact('chats'));
     }
 
     /**
@@ -39,13 +46,19 @@ class ChatsController extends Controller
     public function store(Message $message, ChatRequest $request)
     {
         
-         $message->chat()->create( $request->validate(['title' => 'required', 'summary' =>'required' ]) + 
-                    ['user_id' => \Auth::id()]+ ['message_id' => $message->id]);
- 
-        return back()->with('success', "Chat created successfully");
-        //dd(\Auth::id());
-        //$request->message->chat()->create($request->only('title', 'summary'));
-        //return back()->with('success', "New chat created successfully");
+         $chat = $message->chat()->create( $request->validate(['title' => 'required', 'summary' =>'required' ])  + 
+                ['user_id' => \Auth::id()] + ['message_id' => $message->id]);
+         $count = Message::where('msisdn', '=', $message->msisdn)
+                            ->where('id', '>=', $message->id)->update(['chat_id' => $chat->id, 'corruption_related_id' => 1]);
+         $message->phone->chats_count = $message->phone->chats_count + 1;
+         $message->phone->open_chat_id = $chat->id;
+         $message->phone->corruption_related_count = $count;
+         $message->phone->save();
+         
+
+
+         return redirect()->route('chats.show', $chat->slug)->with('success', "Chat created successfully");
+        
     }
 
     /**
@@ -54,9 +67,9 @@ class ChatsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Chat $chat)
     {
-        //
+        return view('chats.show', compact('chat'));
     }
 
     /**
