@@ -80,9 +80,9 @@ class ChatsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Chat $chat)
     {
-        //
+        return view('chats.edit', compact('chat'));
     }
 
     /**
@@ -92,9 +92,10 @@ class ChatsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $chat)
     {
-        //
+       $chat->update($request->only('title', 'summary'));
+        return redirect()->route('chats.show', $chat->slug)->with('success', "Chat updated successfully");
     }
 
     /**

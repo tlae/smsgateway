@@ -19,7 +19,7 @@
             <hr>
             <div class="media"> 
               <div class="d-flex flex-column action-control mr-4">
-                  <a href="" title="Edit title and executive summary" class="edit">
+                  <a href="{{ route('chats.edit', $chat->slug ) }}" title="Edit chat information" class="edit">
                       <i class="far fa-edit fa-2x mb-2"></i>
                   </a>
                   <a href="" title="forward chat" class="forward">
@@ -31,10 +31,10 @@
               </div>  
                <div class="media-body">
                 {!! $chat->summary_html !!}
-                <div class="float-right mt-0">
-                  <span class="text-muted"> Created by {{$chat->user->name  }}</span>
+                <div class="float-right mt-0 ">
+                  <span class="text-primary"> <small> Created by {{$chat->user->name  }}</small></span>
                   <div class="media">
-                      <span class="text-muted"> On {{ $chat->created_at }}</span>
+                      <span class="text-muted"> <small>On {{ $chat->created_at }}</small> </span>
                   </div>
                 </div>      
                </div>

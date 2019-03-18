@@ -26,6 +26,8 @@ Route::get('/messages/{message}/{msisdn}','MessagesController@show')->name('mess
 //Route::post('/messages/{message}/replies', 'RepliesController@store')->name('replies.store');
 Route::resource('messages.replies', 'RepliesController')->only(['store', 'update']);
 Route::post('/messages/{message}/corruptionRelated', 'CorruptionRelatedController@store')->name('messages.corruptionRelated');
-Route::resource('messages.chat', 'ChatsController')->only(['create', 'store', 'update']);
+Route::resource('messages.chat', 'ChatsController')->only(['create', 'store']);
 Route::get('/chats/{slug}', 'ChatsController@show')->name('chats.show');
 Route::get('/chats', 'ChatsController@index')->name('chats.index');
+Route::get('/chats/{slug}/edit', 'ChatsController@edit')->name('chats.edit');
+Route::put('/chats/{slug}', 'ChatsController@update')->name('chats.update');

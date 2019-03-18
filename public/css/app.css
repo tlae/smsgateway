@@ -10698,34 +10698,43 @@ form.form-delete {
   display: inline;
 }
 
-.mark-controls {
-  min-width: 40px;
-  margin-right: 25px;
+.mark-controls,
+.action-control {
+  min-width: 60px;
+  margin-right: 30px;
   text-align: center;
   color: #495057;
 }
 
 .mark-controls span,
-.mark-controls a {
+.mark-controls a,
+.action-control span,
+.action-control a {
   display: block;
 }
 
-.mark-controls a {
+.mark-controls a,
+.action-control a {
   cursor: pointer;
   color: #6c757d;
 }
 
 .mark-controls a.off,
-.mark-controls a.off:hover {
+.mark-controls a.off:hover,
+.action-control a.off,
+.action-control a.off:hover {
   color: #adb5bd;
 }
 
 .mark-controls a.related.related,
-.mark-controls a.related.related:hover {
+.mark-controls a.related.related:hover,
+.action-control a.related.related,
+.action-control a.related.related:hover {
   color: #ffed4a;
 }
 
-.mark-controls a.vote-accepted {
+.mark-controls a.vote-accepted,
+.action-control a.vote-accepted {
   color: #38c172;
 }
 

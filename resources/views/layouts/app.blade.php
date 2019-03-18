@@ -78,6 +78,6 @@
             @yield('content')
         </main>
     </div>
-    @include('chats._chatcreate')
+
 </body>
 </html>

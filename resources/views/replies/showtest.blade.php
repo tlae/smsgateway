@@ -30,7 +30,9 @@
                     </div>
                     @endif
                    <div class="ml-auto">
-                      <a href="{{route('messages.index')}}"  class="btn btn-outline-secondary"> Back to all Messages</a>
+                      <a href="{{route('messages.index')}}" title="Back to all Messages"> 
+                         <i class="fas fa-undo-alt fa-2x"></i>
+                      </a>
                    </div>
               </div>
               
