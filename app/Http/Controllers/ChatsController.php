@@ -38,7 +38,14 @@ class ChatsController extends Controller
      */
     public function store(Message $message, ChatRequest $request)
     {
-        dd($request->summary);
+        
+         $message->chat()->create( $request->validate(['title' => 'required', 'summary' =>'required' ]) + 
+                    ['user_id' => \Auth::id()]+ ['message_id' => $message->id]);
+ 
+        return back()->with('success', "Chat created successfully");
+        //dd(\Auth::id());
+        //$request->message->chat()->create($request->only('title', 'summary'));
+        //return back()->with('success', "New chat created successfully");
     }
 
     /**

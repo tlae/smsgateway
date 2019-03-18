@@ -23,10 +23,10 @@
                                  class="mt-2 {{ Auth::guest() ? 'off' : ''}}"
                                     onclick="event.preventDefault(); document.getElementById('Corr-related-{{ $msg->id }}').submit();">
                               <i class="fas fa-check-circle fa-2x mb-2"></i> 
-                                </a>
+                              </a>
                               <form id="Corr-related-{{ $msg->id }}" action="/messages/{{ $msg->id }}/corruptionRelated" method="POST" style="disp:none;">
                                     @csrf
-                                </form>
+                              </form>
                                 @else
                                 <a title="This message is marked as corruption related" class="mt-2 related">
                                    <i class="fas fa-check-circle fa-2x mb-2"></i> 
