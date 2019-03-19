@@ -80,7 +80,8 @@ form.form-delete {
   }   
 }
 body{
-    background:#eee;    
+    background:#eee;
+     font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;   
 }
 .chat-list {
     padding: 0;
@@ -144,9 +145,10 @@ body{
 
 .chat-list .out .chat-message {
     padding: 10px;
-    background: #f5f8fa;
-    color: #14171a;
-    font-size: 1rem;
+    font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #dddddd;
+    color: #373737;
+    font-weight: 300;
     text-align: justify;
     border-radius: 10px 10px 0px 10px;
     outline: 0;
@@ -155,9 +157,10 @@ body{
 
 .chat-list .in .chat-message {
     padding: 10px;
-    background: #fff;
-    color: #000;
-    font-size: 1rem;
+    background: #f6f6f6;
+    font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #373737;
+    font-weight: 300;
     text-align: justify;
     border:1px solid $gray-200 ;
     border-radius: 0px 10px 10px 10px;

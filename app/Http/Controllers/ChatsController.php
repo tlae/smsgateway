@@ -58,8 +58,6 @@ class ChatsController extends Controller
 
 
          return redirect()->route('chats.show', $chat->slug)->with('success', "Chat created successfully");
- 
-        //return back()->with('success', "Chat created successfully");
         
     }
 

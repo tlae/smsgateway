@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chat extends Model
 {
-     protected $fillable = ['title', 'summary', 'slug','message_id', 'user_id'];
+
+    protected $fillable = ['title', 'summary', 'slug','message_id', 'user_id'];
+
     public function messages() {
 		return $this->hasMany(Message::class);
 	}
