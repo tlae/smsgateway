@@ -46,35 +46,65 @@
                           <div class="media">
                              <div class="d-flex flex-column mark-controls">
 
-                              @if(is_null($msg->corruption_related_id))
+                              @if(is_null($msg->corruption_related_id) && is_null($msg->misuse_id) )
+
                               <a href="" title="Click to mark as corruption related" 
                                  class="mt-2 {{ Auth::guest() ? 'off' : ''}}"
-                                    onclick="event.preventDefault(); document.getElementById('Corr-related-{{ $msg->id }}').submit();">
-                              <i class="fas fa-check-circle fa-2x mb-2"></i> 
+                                    onclick="event.preventDefault(); document.getElementById('Corr-related-{{ $msg->id}}').submit();">
+                              <i class="fas fa-check-circle fa-2x mb-2 mr-2"></i> 
                               </a>
                               <form id="Corr-related-{{ $msg->id }}" action="/messages/{{ $msg->id }}/corruptionRelated" method="POST" style="disp:none;">
                                     @csrf
                               </form>
-                                @else
-                                <a title="This message is marked as corruption related" class="mt-2 related">
-                                   <i class="fas fa-check-circle fa-2x mb-2"></i> 
-                                 </a>
-                                 @endif
+                                @elseif(is_null($msg->corruption_related_id))
+                                    <a title="This message is marked as {{ $msg->misuse->category}} " class="mt-2 {{ $msg->misuse->category}}">
+                                      <i class="fas fa-exclamation-triangle fa-2x mb-2 mr-2"></i>
+                                    </a>
+                                @else 
+                                    <a title="This message is marked as corruption related" class="mt-2 related">
+                                      <i class="fas fa-check-circle fa-2x mb-2 mr-2"></i> 
+                                    </a>
+                                @endif
 
                                 <div class="dropdown mt-1">
                                 <a title="Choose action" class="dropdown-toggle mark-action dropbtn"  aria-expanded="false">
                                      <i class="fas fa-bars fa-2x"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-content">
-                                  {{-- <a href="{{ route('messages.chat.create', $msg->id)  }}">Open Chat</a> --}}
+                                  {{-- <a href="{{ route('messages.chat.create', $msg->id)  }}">Create new chat</a> --}}
                                   @if ($has_open_chat)
                                   <a href="/chats/{{$chat->slug}}">Go to chat</a>
                                   @else
-                                  <a class= "chatmodal" data-toggle="modal" href="#chatModal{{ $msg->id }}"  id="{{ $msg->id }}" data-id="chatModal{{ $msg->id }}"> Open new chat</a> 
+                                  <a class= "chatmodal" data-toggle="modal" href="#chatModal{{ $msg->id }}"  id="{{ $msg->id }}" data-id="chatModal{{ $msg->id }}"> Create new chat</a> 
                                   @endif                       
-                                  <a href="#">Tagging</a>                                  
-                                  <a href="#">Abuse & Misuse</a>
+                                  <a href="#">Tagging</a>
+                                  
+                                    @if(is_null($msg->corruption_related_id) && is_null($msg->misuse_id) )
+                                      <div class="dropdown-divider"></div>
+
+                                      <span class="ml-2">Misuse&Abuse</span>
+
+                                      <a href="" title="" 
+                                          class="mt-2 {{ Auth::guest() ? 'off' : ''}} misuses"
+                                          onclick="event.preventDefault(); document.getElementById('misuse-{{ $msg->id }}').submit();">
+                                          <i class="far fa-thumbs-down fa-1x mb-2 align-middle"></i> Mark as misuse
+                                      </a>
+                                      <a href="" title="" 
+                                          class="mt-2 {{ Auth::guest() ? 'off' : ''}} align-text-bottom abuses"
+                                          onclick="event.preventDefault(); document.getElementById('abuse-{{ $msg->id }}').submit();">
+                                          <i class="far fa-thumbs-down fa-1x mb-2 align-middle"></i> Mark as Abuse
+                                      </a> 
+                                          <form id="misuse-{{ $msg->id }}" action="/messages/{{ $msg->id }}/misuse" method="POST" style="disp:none;">
+                                              <input type="hidden" name="category" value="misuse">
+                                              @csrf
+                                          </form>
+                                          <form id="abuse-{{ $msg->id }}" action="/messages/{{ $msg->id }}/misuse" method="POST" style="disp:none;">
+                                              <input type="hidden" name="category" value="abuse">
+                                              @csrf
+                                          </form>  
+                                    @endif                     
                                 </div>
+
                                 </div>
                               
                               </div>

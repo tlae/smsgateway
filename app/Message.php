@@ -21,6 +21,9 @@ class Message extends Model
 	public function phone() {
 		return $this->belongsTo(Msisdn::class, 'msisdn');
 	}
+	public function misuse() {
+		return $this->hasOne(Misuse::class);
+	}
 	public function corruptionRelated() {
 		return $this->hasOne(CorruptionRelated::class);
 	}

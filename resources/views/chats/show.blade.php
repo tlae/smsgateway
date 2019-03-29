@@ -1,13 +1,15 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="container content">
     <div class="row justify-content-center">
         <div class="col-md-12">
           <div class="card">
            <div class="card-body">
+            @include('layouts._messages')
             <div class="card-title">
                 <div class="d-flex align-items-center">
-                    <h3>{{ $chat->title }}</h3>
+                    <h5>{{ $chat->title }}</h5>
                     <div class="ml-auto">
                     <a href="{{route('chats.index')}}"  class="btn btn-outline-secondary"> Go to all Chats</a>
                     </div>
@@ -53,7 +55,7 @@
               $messages = App\Message::with('replies.user')->where('chat_id', '=', $chat->id)->get();
               @endphp
             </div>
-            @include('layouts._messages')
+           
             <div class="card-body height3">
               <div class="media">
                 <div class="media-body">
@@ -82,9 +84,8 @@
                                      <i class="fas fa-bars fa-2x"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-content">
-                                                        
-                                  <a href="#">Tagging</a>                                  
-                                  <a href="#">Abuse & Misuse</a>
+                                  <h6 class="dropdown-header">Choose action</h6>                      
+                                  <a href="#">Tagging</a> 
                                 </div>
                                 </div>
                               

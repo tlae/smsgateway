@@ -18,7 +18,7 @@
             </div>
             @include('layouts._messages')
             <div class="card-body height3">
-                <form id="chatForm" action="{{ route('chats.update', $chat) }}" method="post">
+                <form id="chatForm" action="{{ route('chats.update', $chat->slug) }}" method="post">
                   {{ method_field('PUT') }}
                   @csrf
                   <div class="form-group">

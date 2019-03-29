@@ -31,3 +31,4 @@ Route::get('/chats/{slug}', 'ChatsController@show')->name('chats.show');
 Route::get('/chats', 'ChatsController@index')->name('chats.index');
 Route::get('/chats/{slug}/edit', 'ChatsController@edit')->name('chats.edit');
 Route::put('/chats/{slug}', 'ChatsController@update')->name('chats.update');
+Route::post('/messages/{message}/misuse', 'MisuseController@store')->name('messages.misuse');

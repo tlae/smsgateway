@@ -93,7 +93,7 @@ class ChatsController extends Controller
     public function update(Request $request, $chat)
     {
        $chat->update($request->only('title', 'summary'));
-        return redirect()->route('chats.show', $chat->slug)->with('success', "Chat updated successfully");
+        return redirect()->route('chats.show', $chat->slug)->with('success', "Chat updated");
     }
 
     /**

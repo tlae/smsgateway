@@ -19,7 +19,9 @@ class CreateMessagesTable extends Migration
             $table->text('body');
             $table->unsignedInteger('corruption_related_id')->nullable();
             $table->unsignedInteger('chat_id')->nullable();
+            $table->unsignedInteger('misuse_id')->nullable();
             $table->unsignedInteger('replies_count')->default(0);
+            $table->text('tags')->nullable();
             $table->timestamps();
 
             $table->foreign('chat_id')->references('id')->on('chats')->onDelete('SET NULL');
