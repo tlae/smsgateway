@@ -22,7 +22,9 @@ class Chat extends Model
 	public function setTitleAttribute($value) {
 		$this->attributes['title'] = $value;
 		$this->attributes['slug'] = str_slug($value, $separator = '-');
-
+	}
+	public function getCreatedDateAttribute() {
+		return $this->created_at->toDayDateTimeString();
 	}
 	
 	public function getSummaryHtmlAttribute() {

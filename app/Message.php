@@ -31,7 +31,7 @@ class Message extends Model
 		return route("messages.show", [$this->id, $this->msisdn]);
 	}
 	public function getCreatedDateAttribute() {
-		return $this->created_at->diffForHumans();
+		return $this->created_at->toDayDateTimeString();
 	}
 	public function getisCorruptionRelatedAttribute($message) {
 		//

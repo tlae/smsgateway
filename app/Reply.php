@@ -7,6 +7,7 @@ use App\User;
 use App\Message;
 use App\Chat;
 use App\Msisdn;
+use Carbon\Carbon;
 
 class Reply extends Model
 {
@@ -21,7 +22,8 @@ class Reply extends Model
 		return $this->belongsTo(Chat::class);
 	}
 	public function getCreatedDateAttribute() {
-		return $this->created_at->diffForHumans();
+		Carbon::resetToStringFormat();
+		return $this->created_at->toDayDateTimeString();
 	}
 	public static function boot()
  	{

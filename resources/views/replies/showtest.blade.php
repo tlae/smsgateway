@@ -20,12 +20,12 @@
                    <h2>{{ "Messages for" . " " . $msisdn }}</h2> 
                    @if ($has_open_chat)
                    <div class="ml-5">
-                     <h2><a tabindex="0" role="button" id ="chatpopover" data-container="body"  data-html="true" type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="popover" data-placement="bottom">Unclosed conversation</a></h2>
+                     <h2><a tabindex="0" role="button" id ="chatpopover" data-container="body"  data-html="true" type="button" class="btn btn-sm btn-primary waves-effect waves-light" data-toggle="popover" data-placement="bottom">Unclosed conversation</a></h2>
                    </div>
                    <div id="popover-content-chatpopover" class="d-none">
                        <div class="title">
                         <h5>{{$chat->title}}</h5> 
-                        <a  type="button" class="btn btn-outline-primary btn-lg" href="/chats/{{$chat->slug}}" >Go to chat</a>
+                        <a  type="button" class="btn btn-outline-primary btn-sm" href="/chats/{{$chat->slug}}" >Go to chat</a>
                        </div>  
                     </div>
                     @endif
@@ -137,10 +137,13 @@
                                <div class="chat-body mt-2">
                                <div class="chat-message float-right">
                                 <p>{{ $reply->body }}</p>
-                                <small>
-                                <div class="float-right text-muted"> {{ " " . $reply->created_date }}</div>
-                                <div class="text-primary float-right">{{ "By " . $reply->user->name . ".."}}</div>
-                                </small>
+                                <div class="float-right mt-0 ">
+                                  <span class="text-primary"> <small> Replied by {{$reply->user->name }}</small></span>
+                                  <div class="media">
+                                      <span class="text-muted"> <small>On {{ $reply->created_date }}</small> </span>
+                                  </div>
+                                </div>
+                                
                                 </div>
 
                                 </div>

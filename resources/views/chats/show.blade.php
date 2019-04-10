@@ -119,10 +119,12 @@
                                <div class="chat-body mt-2">
                                <div class="chat-message float-right">
                                 <p>{{ $reply->body }}</p>
-                                <small>
-                                <div class="float-right text-muted"> {{ " " . $reply->created_date }}</div>
-                                <div class="text-primary float-right">{{ "By " . $reply->user->name . ".."}}</div>
-                                </small>
+                                <div class="float-right mt-0 ">
+                                  <span class="text-primary"> <small> By {{$reply->user->name  }}</small></span>
+                                  <div class="media">
+                                      <span class="text-muted"> <small>On {{ $reply->created_date}}</small> </span>
+                                  </div>
+                                </div>
                                 </div>
 
                                 </div>
